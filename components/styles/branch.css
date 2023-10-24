@@ -19,7 +19,6 @@
 
 .close-button {
     display: inline-block;
-    float: right;
     cursor: pointer;
 }
 
