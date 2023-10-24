@@ -1,8 +1,63 @@
 <?php
-include '../db_connection.php';
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'connect';
 
-// Your HTML and PHP code follows here.
-// You can use the $con variable to perform database operations.
+// Create a single database connection
+$con = mysqli_connect($host, $user, $pass, $db);
+
+if ($con) {
+    // Fetch data from the 'branches' table
+    $sql = "SELECT * FROM branches";
+    $result = mysqli_query($con, $sql);
+
+    if ($result) {
+        $branches = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        echo 'Error fetching branches data: ' . mysqli_error($con);
+        $branches = [];
+    }
+
+    // Fetch data from the 'car_types' table
+    $sql = "SELECT * FROM car_types";
+    $result = mysqli_query($con, $sql);
+
+    if ($result) {
+        $carTypes = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        echo 'Error fetching car types data: ' . mysqli_error($con);
+        $carTypes = [];
+    }
+
+    // Fetch data from the 'cars' table
+    $sql = "SELECT * FROM cars";
+    $result = mysqli_query($con, $sql);
+
+    if ($result) {
+        $cars = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        echo 'Error fetching car data: ' . mysqli_error($con);
+        $cars = [];
+    }
+
+    // Fetch data from the 'customers' table
+    $sql = "SELECT * FROM customer";
+    $result = mysqli_query($con, $sql);
+
+    if ($result) {
+        $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        echo 'Error fetching customer data: ' . mysqli_error($con);
+        $customers = [];
+    }
+} else {
+    echo 'Connection failed: ' . mysqli_connect_error();
+    $branches = $carTypes = $cars = $customers = [];
+}
+
+// Close the database connection when you're done with it
+mysqli_close($con);
 ?>
 
 <!DOCTYPE html>
@@ -10,8 +65,68 @@ include '../db_connection.php';
 
 <head>
     <title>Branches</title>
-    <link rel="stylesheet" type="text/css" href="../components/styles/branch.css">
+    <style>
+        /* Styling for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
 
+        .modal-content {
+            background-color: #fff;
+            width: 80%;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .close-button {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+        }
+
+        .action-buttons {
+            display: flex;
+        }
+
+        .action-buttons button {
+            margin-right: 5px;
+            background-color: #3498db;
+            /* Set your preferred background color */
+            color: #fff;
+            /* Text color */
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .action-buttons button:hover {
+            background-color: #2980b9;
+            /* Background color on hover */
+        }
+
+        .action-cartype {
+            margin-right: 5px;
+            background-color: #e74c3c;
+            /* Set your preferred background color for "Delete" */
+            color: #fff;
+            /* Text color */
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,7 +134,9 @@ include '../db_connection.php';
     <!-- Display a table of branches with buttons for add, edit, delete -->
 
     <!-- Add a button to open the form for adding a new branch -->
-    <button onclick="openAddBranchForm()">New Branch</button>
+    <!-- <button onclick="openAddBranchForm()">New Branch</button> -->
+    <button id="addBranchButton" onclick="openAddBranchForm()">New Branch</button>
+
     <table>
         <tr>
             <th>Name of Branch</th>
@@ -28,25 +145,15 @@ include '../db_connection.php';
         </tr>
         <!-- Display data from the 'branches' table -->
         <?php
-        $sql = "SELECT * FROM branch";
-        $result = mysqli_query($conn, $sql);
-
-        if ($result) {
-            $branches = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        } else {
-            echo 'Error fetching branches data: ' . mysqli_error($con);
-            $branches = [];
-        }
-
         foreach ($branches as $key => $branch) {
             echo "<tr>";
             echo "<td id='name_$key'>{$branch['name']}</td>";
-            echo "<td>{$branch['total_car_sold']}</td>";
+            echo "<td>{$branch['total_sold_cars']}</td>";
             echo "<td class='action-buttons'>
-                <button onclick='editBranch($key)'>Edit</button>
-                <button onclick='deleteBranch($key)'>Delete</button>
-                <button onclick='viewProducts($key)'>View Products</button>
-                </td>";
+        <button onclick='editBranch($key)'>Edit</button>
+        <button onclick='deleteBranch($key)'>Delete</button>
+        <button onclick='viewProducts($key)'>View Products</button>
+        </td>";
             echo "</tr>";
         }
         ?>
