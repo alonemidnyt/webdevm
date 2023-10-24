@@ -65,6 +65,7 @@ mysqli_close($con);
 
 <head>
     <title>Branches</title>
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Link to your CSS file -->
     <style>
         /* Styling for the modal */
         .modal {
@@ -101,9 +102,7 @@ mysqli_close($con);
         .action-buttons button {
             margin-right: 5px;
             background-color: #3498db;
-            /* Set your preferred background color */
             color: #fff;
-            /* Text color */
             border: none;
             border-radius: 4px;
             padding: 5px 10px;
@@ -112,7 +111,7 @@ mysqli_close($con);
 
         .action-buttons button:hover {
             background-color: #2980b9;
-            /* Background color on hover */
+
         }
 
         .action-cartype {
@@ -171,6 +170,7 @@ mysqli_close($con);
         <input type="text" id="branchNameInput" placeholder="Branch Name">
         <input type="text" id="totalSoldCarsInput" placeholder="Total Sold Cars">
         <button onclick="addBranch()">Add Branch</button>
+        <button onclick="cancelAdd()">Cancel</button>
     </div>
 
     <!-- Modal for viewing products -->
@@ -296,14 +296,9 @@ mysqli_close($con);
             document.getElementById('addBranchForm').style.display = 'block';
         }
 
-        // Function to add a new branch
         function addBranch() {
             var branchName = document.getElementById('branchNameInput').value;
             var totalSoldCars = document.getElementById('totalSoldCarsInput').value;
-
-            // Perform an AJAX request to add the branch to the database (server-side operation).
-            // After adding the branch, you can update the table to reflect the new branch.
-            // For now, we'll simply add the new branch to the table on the front-end.
 
             var table = document.querySelector('table');
             var newRow = table.insertRow(table.rows.length);
@@ -316,10 +311,10 @@ mysqli_close($con);
 
             var cell3 = newRow.insertCell(2);
             cell3.innerHTML = `
-            <button onclick="editBranch(${table.rows.length - 1})">Edit</button>
-            <button onclick="deleteBranch(${table.rows.length - 1})">Delete</button>
-            <button onclick="viewProducts(${table.rows.length - 1})">View Products</button>
-        `;
+        <button class="addbranch-button" onclick="editBranch(${table.rows.length - 1})">Edit</button>
+        <button class="addbranch-button" onclick="deleteBranch(${table.rows.length - 1})">Delete</button>
+        <button class="addbranch-button" onclick="viewProducts(${table.rows.length - 1})">View Products</button>
+    `;
 
             // Clear the input fields and hide the form
             document.getElementById('branchNameInput').value = '';
@@ -354,6 +349,12 @@ mysqli_close($con);
             document.getElementById('editForm').style.display = 'none';
             currentlyEditing = -1;
         }
+
+        function cancelAdd() {
+            document.getElementById('addBranchForm').style.display = 'none';
+            currentlyEditing = -1;
+        }
+
 
         function viewProducts(index) {
             var branchName = document.getElementById('name_' + index).innerText;
