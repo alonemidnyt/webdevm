@@ -2,13 +2,13 @@
     $server = "localhost";
     $username = "root";
     $password = "";
-    $database = "midterms";
+    $database = "webdev";
 
     // Create a database connection
-    $conn = new mysqli($server, $username, $password, $database);
+    $con = new mysqli($server, $username, $password, $database);
 
     // Check the connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if ($con->connect_error) {
+        die("Connection failed: " . $con->connect_error);
     }
     ?>

@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.button-container {
+    display:block;
+    justify-content:start;
+}
+
+.edit-button, .view-button {
+    border-radius: 30px;
+    background-color: #0074d9;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin: 1px; /* Add margin for spacing */
+}
+
+.delete-button{
+    border-radius: 30px;
+    background-color: #d9002f;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin: 1px; /* Add margin for spacing */
+}

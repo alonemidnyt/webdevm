@@ -7,11 +7,11 @@ if (isset($_POST['submit'])) {
     $sql = "INSERT INTO users (username, password)
                 VALUES ('$email',  '$password')";
 
-    if ($conn->query($sql) === TRUE) {
-        header('location:../routes/login.php');
+    if ($con->query($sql) === TRUE) {
+        header('location:../login.php');
     } else {
         echo "Error: " . $sql . "<br>" . $conn_error;
     }
 
-    $conn->close();
+    $con->close();
 }
