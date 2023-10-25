@@ -153,9 +153,10 @@
         }
 
         function viewProducts(branchId) {
-            // Implement your view products functionality here
-            alert("View products for branch with ID: " + branchId);
+            window.location.href="cartype.php?id=" + branchId
         }
+
+
         $(document).ready(function(){
             $(".edit-button").on("click",function(){
                 const id = $(this).data("id");
